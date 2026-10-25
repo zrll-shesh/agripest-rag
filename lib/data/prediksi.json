@@ -1,0 +1,287 @@
+{
+ "model": "YOLO11l (ONNX)",
+ "ambangKeyakinan": 0.35,
+ "foto": {
+  "IP003000587.jpg": {
+   "lebar": 300,
+   "tinggi": 201,
+   "labelAsli": 3,
+   "deteksi": [
+    {
+     "kelas": 3,
+     "keyakinan": 0.433,
+     "kotak": [
+      0.023,
+      0.0712,
+      0.9301,
+      0.8544
+     ]
+    }
+   ]
+  },
+  "IP005000342.jpg": {
+   "lebar": 305,
+   "tinggi": 214,
+   "labelAsli": 5,
+   "deteksi": [
+    {
+     "kelas": 5,
+     "keyakinan": 0.739,
+     "kotak": [
+      0.1959,
+      0.2376,
+      0.9818,
+      0.9794
+     ]
+    }
+   ]
+  },
+  "IP014000186.jpg": {
+   "lebar": 800,
+   "tinggi": 800,
+   "labelAsli": 20,
+   "deteksi": [
+    {
+     "kelas": 20,
+     "keyakinan": 0.829,
+     "kotak": [
+      0.1478,
+      0.1786,
+      0.8544,
+      0.8278
+     ]
+    }
+   ]
+  },
+  "IP014000480.jpg": {
+   "lebar": 529,
+   "tinggi": 416,
+   "labelAsli": 20,
+   "deteksi": [
+    {
+     "kelas": 20,
+     "keyakinan": 0.791,
+     "kotak": [
+      0.2499,
+      0.1615,
+      0.9336,
+      0.5242
+     ]
+    },
+    {
+     "kelas": 20,
+     "keyakinan": 0.708,
+     "kotak": [
+      0.3385,
+      0.6256,
+      0.9731,
+      0.9554
+     ]
+    },
+    {
+     "kelas": 20,
+     "keyakinan": 0.672,
+     "kotak": [
+      0.0976,
+      0.3804,
+      0.4115,
+      0.8078
+     ]
+    },
+    {
+     "kelas": 20,
+     "keyakinan": 0.636,
+     "kotak": [
+      0.3291,
+      0.5693,
+      0.7268,
+      0.8249
+     ]
+    },
+    {
+     "kelas": 20,
+     "keyakinan": 0.428,
+     "kotak": [
+      0.0,
+      0.4716,
+      0.1766,
+      0.7855
+     ]
+    }
+   ]
+  },
+  "IP014000645.jpg": {
+   "lebar": 390,
+   "tinggi": 280,
+   "labelAsli": 20,
+   "deteksi": [
+    {
+     "kelas": 20,
+     "keyakinan": 0.825,
+     "kotak": [
+      0.0746,
+      0.1117,
+      0.7004,
+      0.8112
+     ]
+    }
+   ]
+  },
+  "IP015000051.jpg": {
+   "lebar": 450,
+   "tinggi": 345,
+   "labelAsli": 21,
+   "deteksi": [
+    {
+     "kelas": 21,
+     "keyakinan": 0.761,
+     "kotak": [
+      0.0808,
+      0.3671,
+      0.8927,
+      0.8707
+     ]
+    }
+   ]
+  },
+  "IP016000504.jpg": {
+   "lebar": 200,
+   "tinggi": 164,
+   "labelAsli": 22,
+   "deteksi": [
+    {
+     "kelas": 22,
+     "keyakinan": 0.79,
+     "kotak": [
+      0.1336,
+      0.186,
+      0.9721,
+      0.9029
+     ]
+    }
+   ]
+  },
+  "IP019000131.jpg": {
+   "lebar": 220,
+   "tinggi": 193,
+   "labelAsli": 18,
+   "deteksi": [
+    {
+     "kelas": 17,
+     "keyakinan": 0.386,
+     "kotak": [
+      0.0019,
+      0.2071,
+      0.9668,
+      0.9669
+     ]
+    }
+   ]
+  },
+  "IP024000370.jpg": {
+   "lebar": 500,
+   "tinggi": 463,
+   "labelAsli": 16,
+   "deteksi": [
+    {
+     "kelas": 16,
+     "keyakinan": 0.805,
+     "kotak": [
+      0.1069,
+      0.153,
+      0.8885,
+      0.8839
+     ]
+    }
+   ]
+  },
+  "IP024003932.jpg": {
+   "lebar": 313,
+   "tinggi": 209,
+   "labelAsli": 16,
+   "deteksi": [
+    {
+     "kelas": 16,
+     "keyakinan": 0.791,
+     "kotak": [
+      0.1512,
+      0.0417,
+      0.8109,
+      0.6936
+     ]
+    }
+   ]
+  },
+  "luar-kolase-serangga.jpg": {
+   "lebar": 640,
+   "tinggi": 640,
+   "labelAsli": null,
+   "deteksi": [
+    {
+     "kelas": 16,
+     "keyakinan": 0.559,
+     "kotak": [
+      0.5433,
+      0.2967,
+      0.7717,
+      0.468
+     ]
+    }
+   ]
+  },
+  "luar-kutu-daun.jpg": {
+   "lebar": 315,
+   "tinggi": 211,
+   "labelAsli": null,
+   "deteksi": [
+    {
+     "kelas": 16,
+     "keyakinan": 0.849,
+     "kotak": [
+      0.122,
+      0.1157,
+      0.7245,
+      0.5464
+     ]
+    },
+    {
+     "kelas": 16,
+     "keyakinan": 0.679,
+     "kotak": [
+      0.4034,
+      0.5469,
+      0.6588,
+      0.8671
+     ]
+    },
+    {
+     "kelas": 16,
+     "keyakinan": 0.654,
+     "kotak": [
+      0.6293,
+      0.405,
+      0.9042,
+      0.8428
+     ]
+    }
+   ]
+  },
+  "luar-kutu-kayu.jpg": {
+   "lebar": 1024,
+   "tinggi": 577,
+   "labelAsli": null,
+   "deteksi": [
+    {
+     "kelas": 21,
+     "keyakinan": 0.783,
+     "kotak": [
+      0.1343,
+      0.1066,
+      0.8713,
+      0.8265
+     ]
+    }
+   ]
+  }
+ }
+}

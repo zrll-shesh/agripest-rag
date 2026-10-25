@@ -1,0 +1,33 @@
+{
+  "name": "agripest-rag",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AgriPest-RAG: dashboard simulasi pemantauan hama padi, jagung, dan bawang merah dengan rekomendasi PHT dan asisten RAG",
+  "scripts": {
+    "siapkan-data": "node scripts/siapkan-data.mjs",
+    "dev": "node scripts/siapkan-data.mjs && next dev",
+    "build": "node scripts/siapkan-data.mjs && next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "clsx": "2.1.1",
+    "lucide-react": "0.400.0",
+    "next": "14.2.35",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.19",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.2.35",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.4.5"
+  }
+}
