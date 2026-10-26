@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "AgriPest-RAG: dashboard simulasi pemantauan hama padi, jagung, dan bawang merah dengan rekomendasi PHT dan asisten RAG",
+  "author": "Nazril Ravi Pratama (S1 Sains Data, Universitas Negeri Surabaya)",
   "scripts": {
     "siapkan-data": "node scripts/siapkan-data.mjs",
     "dev": "node scripts/siapkan-data.mjs && next dev",

@@ -1,9 +1,12 @@
-import { ambilKelas } from "@/lib/kelas";
+"use client";
+import { ambilKelas, namaKelas } from "@/lib/kelas";
+import { useBahasa } from "@/lib/i18n";
 import type { Deteksi } from "@/lib/data";
 import { persen } from "@/lib/format";
 
 // Foto dari perangkap dengan kotak di sekeliling setiap hama yang dikenali.
 export default function FotoDeteksi({ foto, lebar, tinggi, deteksi, judul }: { foto: string; lebar: number; tinggi: number; deteksi: Deteksi[]; judul: string }) {
+  const { bahasa } = useBahasa();
   const rasio = lebar / tinggi;
   return (
     <figure className="wadah-foto relative overflow-hidden rounded-panel">
@@ -22,7 +25,7 @@ export default function FotoDeteksi({ foto, lebar, tinggi, deteksi, judul }: { f
               <span
                 className={`absolute left-[-2.5px] whitespace-nowrap rounded-[5px] bg-[#F2C14E] px-1.5 py-0.5 text-[11.5px] font-bold text-tinta ${atas ? "top-full mt-0.5" : "bottom-full mb-0.5"}`}
               >
-                {ambilKelas(d.kelas).nama} {persen(d.keyakinan)}
+                {namaKelas(ambilKelas(d.kelas), bahasa)} {persen(d.keyakinan)}
               </span>
             </div>
           );

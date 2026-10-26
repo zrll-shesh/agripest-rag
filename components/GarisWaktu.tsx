@@ -1,6 +1,7 @@
 "use client";
 import { MENIT_AKHIR, MENIT_AWAL, dariMenit, type Kiriman, type RingkasanUnit } from "@/lib/simulasi";
-import { ambilKelas } from "@/lib/kelas";
+import { ambilKelas, namaKelas } from "@/lib/kelas";
+import { useBahasa } from "@/lib/i18n";
 import { LencanaStatus } from "@/components/Lencana";
 import { cx } from "@/lib/format";
 
@@ -19,6 +20,8 @@ interface Props {
 
 // Garis waktu malam: satu baris per lahan, satu titik per foto yang dikirim kamera.
 export default function GarisWaktu({ semua, jumlahTampil, menitSekarang, ringkasan, terpilih, terbaru, pilih }: Props) {
+  const { bahasa, tx } = useBahasa();
+  const en = bahasa === "en";
   return (
     <div className="overflow-hidden rounded-panel border border-garis bg-kertas">
       {ringkasan.map((u, baris) => {
@@ -28,18 +31,18 @@ export default function GarisWaktu({ semua, jumlahTampil, menitSekarang, ringkas
             <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 lg:block">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-[18px] font-semibold leading-tight">{u.nama}</h3>
+                  <h3 className="text-[18px] font-semibold leading-tight">{en ? u.namaEn : u.nama}</h3>
                   <LencanaStatus status={u.status} />
                 </div>
-                <p className="mt-0.5 text-[13px] text-lumpur">{u.kodeKamera} · {u.lokasi}</p>
+                <p className="mt-0.5 text-[13px] text-lumpur">{en ? u.kodeKameraEn : u.kodeKamera} · {en ? u.lokasiEn : u.lokasi}</p>
               </div>
               <div className="lg:mt-2.5">
                 <p className="text-[13.5px]">
                   <span className="font-judul text-[22px] font-bold leading-none">{u.jumlahHamaJendela}</span>{" "}
-                  <span className="text-lumpur">hama, 2 jam terakhir</span>
+                  <span className="text-lumpur">{tx({ id: "hama, 2 jam terakhir", en: u.jumlahHamaJendela === 1 ? "pest, last 2 hours" : "pests, last 2 hours" })}</span>
                 </p>
                 {u.hamaTerbanyak && (
-                  <p className="mt-0.5 text-[13px] text-lumpur">Terbanyak {ambilKelas(u.hamaTerbanyak.kelas).nama.toLowerCase()}</p>
+                  <p className="mt-0.5 text-[13px] text-lumpur">{tx({ id: "Terbanyak", en: "Most" })} {namaKelas(ambilKelas(u.hamaTerbanyak.kelas), bahasa).toLowerCase()}</p>
                 )}
               </div>
             </div>
@@ -59,14 +62,14 @@ export default function GarisWaktu({ semua, jumlahTampil, menitSekarang, ringkas
                   const jumlah = k.deteksi.length;
                   const aktif = terpilih === k.urutan;
                   const warna = jumlah >= 4 ? "bg-bata text-kertas" : jumlah >= 2 ? "bg-gabah text-kertas" : "bg-daun text-kertas";
-                  const nama = jumlah ? ambilKelas(k.deteksi[0].kelas).nama : "tidak ada hama";
+                  const nama = jumlah ? namaKelas(ambilKelas(k.deteksi[0].kelas), bahasa) : tx({ id: "tidak ada hama", en: "no pests" });
                   return (
                     <button
                       key={k.urutan}
                       type="button"
                       disabled={!terlihat}
                       onClick={() => pilih(k.urutan)}
-                      aria-label={terlihat ? `${u.nama}, pukul ${k.jam}: ${jumlah} ${nama}` : `Jadwal foto pukul ${k.jam}, belum dikirim`}
+                      aria-label={terlihat ? (en ? `${u.namaEn}, ${k.jam}: ${jumlah} ${nama}` : `${u.nama}, pukul ${k.jam}: ${jumlah} ${nama}`) : en ? `Photo scheduled at ${k.jam}, not sent yet` : `Jadwal foto pukul ${k.jam}, belum dikirim`}
                       aria-pressed={aktif}
                       className={cx(
                         "absolute top-[23px] grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full font-judul text-[13px] font-bold transition-transform",
@@ -86,11 +89,11 @@ export default function GarisWaktu({ semua, jumlahTampil, menitSekarang, ringkas
         );
       })}
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-garis bg-tanah/60 px-4 py-2.5 text-[12.5px] text-lumpur sm:px-5">
-        <span>Angka di titik = jumlah hama di foto</span>
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-daun" /> 1 hama</span>
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-gabah" /> 2 sampai 3</span>
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-bata" /> 4 atau lebih</span>
-        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full border-2 border-dashed border-garis" /> jadwal berikutnya</span>
+        <span>{tx({ id: "Angka di titik = jumlah hama di foto", en: "Number in dot = pests in the photo" })}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-daun" /> {tx({ id: "1 hama", en: "1 pest" })}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-gabah" /> {tx({ id: "2 sampai 3", en: "2 to 3" })}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full bg-bata" /> {tx({ id: "4 atau lebih", en: "4 or more" })}</span>
+        <span className="flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-full border-2 border-dashed border-garis" /> {tx({ id: "jadwal berikutnya", en: "next scheduled" })}</span>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 # AgriPest-RAG
 
+Dibuat oleh **Nazril Ravi Pratama**, S1 Sains Data, Universitas Negeri Surabaya (2026).
+
 Dashboard simulasi pemantauan hama padi, jagung, dan bawang merah. Foto dari kamera lampu perangkap (disimulasikan) dikenali model **YOLO11l**, lalu sistem menyusun **langkah Pengendalian Hama Terpadu (PHT)** yang berurutan dan patuh aturan pestisida, dilengkapi **asisten tanya-jawab RAG** (Gemini) yang hanya menjawab dari pustaka sumber resmi.
 
-Next.js 14 (App Router), TypeScript, Tailwind CSS. Tampil baik di desktop dan ponsel.
+Next.js 14 (App Router), TypeScript, Tailwind CSS. Tampil baik di desktop dan ponsel, dengan pilihan bahasa **Indonesia / English** (tombol ID | EN di kanan atas; pilihan tersimpan di browser). Di mode English, seluruh tampilan dan jawaban asisten berbahasa Inggris, sedangkan isi pustaka dari CSV tetap dikutip dalam bahasa Indonesia sesuai sumber aslinya.
 
 ## Halaman
 

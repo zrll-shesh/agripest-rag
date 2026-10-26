@@ -14,6 +14,7 @@ export interface Kiriman {
   deteksi: Deteksi[];
   labelAsli: number | null;
   labelAsliTeks?: string;
+  labelAsliTeksEn?: string;
 }
 
 // Batas status dipakai untuk simulasi: jumlah hama tertangkap dalam 2 jam terakhir per unit perangkap.
@@ -35,7 +36,7 @@ export const SEMUA_KIRIMAN: Kiriman[] = JADWAL.kiriman
     return {
       urutan, jam: k.jam, menit: k.menit, unitId: k.unit, foto: k.foto,
       lebar: hasil?.lebar ?? 4, tinggi: hasil?.tinggi ?? 3, deteksi: hasil?.deteksi ?? [],
-      labelAsli: hasil?.labelAsli ?? null, labelAsliTeks: k.labelAsliTeks,
+      labelAsli: hasil?.labelAsli ?? null, labelAsliTeks: k.labelAsliTeks, labelAsliTeksEn: k.labelAsliTeksEn,
     };
   });
 
@@ -45,9 +46,12 @@ export const MENIT_AKHIR = Math.ceil((SEMUA_KIRIMAN[SEMUA_KIRIMAN.length - 1].me
 export interface RingkasanUnit {
   unitId: string;
   nama: string;
+  namaEn: string;
   komoditas: "Padi" | "Jagung" | "Bawang";
   lokasi: string;
+  lokasiEn: string;
   kodeKamera: string;
+  kodeKameraEn: string;
   jumlahFoto: number;
   jumlahHamaJendela: number;
   status: StatusLahan;
@@ -79,7 +83,7 @@ export function ringkasUnit(terlihat: Kiriman[], menitSekarang: number): Ringkas
       arah = b > a ? "naik" : b < a ? "turun" : "tetap";
     }
     return {
-      unitId: u.id, nama: u.nama, komoditas: u.komoditas, lokasi: u.lokasi, kodeKamera: u.kodeKamera,
+      unitId: u.id, nama: u.nama, namaEn: u.namaEn, komoditas: u.komoditas, lokasi: u.lokasi, lokasiEn: u.lokasiEn, kodeKamera: u.kodeKamera, kodeKameraEn: u.kodeKameraEn,
       jumlahFoto: milikUnit.length, jumlahHamaJendela: jumlah, status: statusDariJumlah(jumlah),
       hamaTerbanyak: terbanyak ?? null, komposisi,
       kirimanTerakhir: milikUnit[milikUnit.length - 1] ?? null, arah,
@@ -90,28 +94,41 @@ export function ringkasUnit(terlihat: Kiriman[], menitSekarang: number): Ringkas
 const URUT_STATUS: Record<StatusLahan, number> = { "perlu-dicek": 2, waspada: 1, aman: 0 };
 
 // Kalimat utama di atas dashboard. Disusun dari angka, bukan ditulis tangan.
-export function kalimatRingkasan(ringkasan: RingkasanUnit[], jamSekarang: string): { judul: string; lanjutan: string } {
+export function kalimatRingkasan(ringkasan: RingkasanUnit[], jamSekarang: string, bahasa: "id" | "en" = "id"): { judul: string; lanjutan: string } {
+  const en = bahasa === "en";
   const urut = [...ringkasan].sort((a, b) => URUT_STATUS[b.status] - URUT_STATUS[a.status] || b.jumlahHamaJendela - a.jumlahHamaJendela);
   const teratas = urut[0];
   if (!teratas || teratas.jumlahHamaJendela === 0) {
-    return { judul: `Sampai pukul ${jamSekarang}, belum ada hama tertangkap di ketiga lahan.`, lanjutan: "Kamera tetap memotret setiap 30 menit." };
+    return en
+      ? { judul: `As of ${jamSekarang}, no pests have been caught in any of the three fields.`, lanjutan: "The cameras keep taking a photo every 30 minutes." }
+      : { judul: `Sampai pukul ${jamSekarang}, belum ada hama tertangkap di ketiga lahan.`, lanjutan: "Kamera tetap memotret setiap 30 menit." };
   }
-  const nama = teratas.nama.toLowerCase();
-  const nm = (k: number) => ambilKelas(k).nama.toLowerCase();
+  const nm = (k: number) => (en ? ambilKelas(k).namaEn.toLowerCase() : ambilKelas(k).nama.toLowerCase());
   const [satu, dua] = teratas.komposisi;
-  const isiHama =
-    teratas.komposisi.length === 1
-      ? `semuanya ${nm(satu.kelas)}`
-      : satu.jumlah > teratas.jumlahHamaJendela / 2
-        ? `kebanyakan ${nm(satu.kelas)}`
-        : `terutama ${nm(satu.kelas)} dan ${nm(dua.kelas)}`;
-  const ajakan =
-    teratas.status === "perlu-dicek"
-      ? "Periksa lahan besok pagi sebelum memutuskan tindakan."
-      : teratas.status === "waspada"
-        ? "Belum perlu tindakan, tapi pantau tangkapan berikutnya."
-        : "Kondisi masih tenang.";
-  const judul = `Pukul ${jamSekarang}, ${nama} paling ramai: ${teratas.jumlahHamaJendela} hama tertangkap dalam 2 jam terakhir, ${isiHama}.`;
-  const lainnya = urut.slice(1).map((u) => `${u.nama.replace("Lahan ", "").toLowerCase()} ${u.jumlahHamaJendela === 0 ? "belum ada tangkapan" : `${u.jumlahHamaJendela} hama`}`);
-  return { judul, lanjutan: `${ajakan} Lahan lain: ${lainnya.join(", ")}.` };
+  const mayoritas = satu.jumlah > teratas.jumlahHamaJendela / 2;
+  const isiHama = teratas.komposisi.length === 1
+    ? (en ? `all ${nm(satu.kelas)}` : `semuanya ${nm(satu.kelas)}`)
+    : mayoritas
+      ? (en ? `mostly ${nm(satu.kelas)}` : `kebanyakan ${nm(satu.kelas)}`)
+      : (en ? `mainly ${nm(satu.kelas)} and ${nm(dua.kelas)}` : `terutama ${nm(satu.kelas)} dan ${nm(dua.kelas)}`);
+  const ajakan = {
+    "perlu-dicek": en ? "Inspect the field tomorrow morning before deciding on any action." : "Periksa lahan besok pagi sebelum memutuskan tindakan.",
+    waspada: en ? "No action needed yet, but watch the next catches." : "Belum perlu tindakan, tapi pantau tangkapan berikutnya.",
+    aman: en ? "Things are still calm." : "Kondisi masih tenang.",
+  }[teratas.status];
+  const namaLahan = (u: RingkasanUnit) => (en ? u.namaEn : u.nama).toLowerCase();
+  const pendek = (u: RingkasanUnit) => (en ? u.namaEn.replace(" field", "") : u.nama.replace("Lahan ", "")).toLowerCase();
+  const lainnya = urut.slice(1).map((u) =>
+    `${pendek(u)} ${u.jumlahHamaJendela === 0 ? (en ? "no catches yet" : "belum ada tangkapan") : en ? `${u.jumlahHamaJendela} ${u.jumlahHamaJendela === 1 ? "pest" : "pests"}` : `${u.jumlahHamaJendela} hama`}`
+  );
+  if (en) {
+    return {
+      judul: `At ${jamSekarang}, the ${namaLahan(teratas)} is the busiest: ${teratas.jumlahHamaJendela} ${teratas.jumlahHamaJendela === 1 ? "pest" : "pests"} caught in the last 2 hours, ${isiHama}.`,
+      lanjutan: `${ajakan} Other fields: ${lainnya.join(", ")}.`,
+    };
+  }
+  return {
+    judul: `Pukul ${jamSekarang}, ${namaLahan(teratas)} paling ramai: ${teratas.jumlahHamaJendela} hama tertangkap dalam 2 jam terakhir, ${isiHama}.`,
+    lanjutan: `${ajakan} Lahan lain: ${lainnya.join(", ")}.`,
+  };
 }

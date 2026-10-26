@@ -25,8 +25,8 @@ export const BARIS_PESTISIDA = pestisidaJson as unknown as BarisPestisida[];
 export const PREDIKSI = prediksiJson as unknown as { model: string; ambangKeyakinan: number; foto: Record<string, HasilFoto> };
 export const JADWAL = jadwalJson as unknown as {
   tanggal: string;
-  unit: { id: string; nama: string; komoditas: "Padi" | "Jagung" | "Bawang"; lokasi: string; kodeKamera: string }[];
-  kiriman: { jam: string; unit: string; foto: string; labelAsliTeks?: string }[];
+  unit: { id: string; nama: string; namaEn: string; komoditas: "Padi" | "Jagung" | "Bawang"; lokasi: string; lokasiEn: string; kodeKamera: string; kodeKameraEn: string }[];
+  kiriman: { jam: string; unit: string; foto: string; labelAsliTeks?: string; labelAsliTeksEn?: string }[];
 };
 
 export const barisHamaUntuk = (kelas: number) => BARIS_HAMA.filter((b) => b.kelas === kelas);

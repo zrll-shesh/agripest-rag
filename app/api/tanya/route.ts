@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 interface Pesan { peran: "pengguna" | "asisten"; teks: string }
 interface Permintaan {
   pertanyaan: string;
+  bahasa?: "id" | "en";
   riwayat?: Pesan[];
   konteks?: { kelas: number | null; keyakinan?: number; lahan?: string; jam?: string; jumlah?: number; cocok?: "ya" | "tidak" | "ragu" | null };
 }
@@ -85,16 +86,22 @@ export async function POST(req: Request) {
   const potongan = cariKonteks(pertanyaan, kelasKonteks);
   const { teks: pustaka, daftarSumber } = susunPustaka(potongan);
   const kunci = process.env.GEMINI_API_KEY;
+  const en = badan.bahasa === "en";
 
   // Tanpa kunci API: tetap berguna, tampilkan potongan pustaka yang paling relevan.
   if (!kunci) {
     const jawaban = potongan.length
-      ? ["Asisten AI belum diaktifkan, jadi berikut informasi paling relevan dari pustaka AgriPest-RAG:", ...potongan.slice(0, 4).map((p) => `- ${p.teks.replace(/^\[[^\]]+\]\s*/, "")}`)].join("\n")
-      : "Asisten AI belum diaktifkan dan pustaka belum memuat informasi untuk pertanyaan ini. Silakan tanyakan ke petugas POPT atau penyuluh pertanian setempat.";
+      ? [en ? "The AI assistant is not enabled yet, so here is the most relevant information from the AgriPest-RAG library (in Indonesian):" : "Asisten AI belum diaktifkan, jadi berikut informasi paling relevan dari pustaka AgriPest-RAG:", ...potongan.slice(0, 4).map((p) => `- ${p.teks.replace(/^\[[^\]]+\]\s*/, "")}`)].join("\n")
+      : en
+        ? "The AI assistant is not enabled yet and the library has no information for this question. Please ask your local pest observer or agricultural extension officer."
+        : "Asisten AI belum diaktifkan dan pustaka belum memuat informasi untuk pertanyaan ini. Silakan tanyakan ke petugas POPT atau penyuluh pertanian setempat.";
     return NextResponse.json({ jawaban, sumber: daftarSumber.slice(0, 6), mode: "pustaka" });
   }
 
-  const sistem = `${ATURAN}\n\nKONTEKS LAYAR PENGGUNA:\n${teksKonteksDeteksi(badan.konteks)}\n\nPUSTAKA:\n${pustaka || "(tidak ada potongan pustaka yang relevan)"}\n\nDAFTAR RUJUKAN:\n${daftarSumber.map((s, i) => `[${i + 1}] ${s.judul}`).join("\n")}`;
+  const bahasaJawab = en
+    ? "\n\nBAHASA JAWABAN: Pengguna memilih bahasa Inggris. Tulis seluruh jawaban dalam bahasa Inggris yang sederhana (terjemahkan isi pustaka yang berbahasa Indonesia). Nama hama boleh disertai nama Indonesia dalam kurung."
+    : "";
+  const sistem = `${ATURAN}${bahasaJawab}\n\nKONTEKS LAYAR PENGGUNA:\n${teksKonteksDeteksi(badan.konteks)}\n\nPUSTAKA:\n${pustaka || "(tidak ada potongan pustaka yang relevan)"}\n\nDAFTAR RUJUKAN:\n${daftarSumber.map((s, i) => `[${i + 1}] ${s.judul}`).join("\n")}`;
   const riwayat = (badan.riwayat ?? []).slice(-6).map((p) => ({ role: p.peran === "asisten" ? "model" : "user", parts: [{ text: p.teks.slice(0, 1500) }] }));
   const isi = [...riwayat, { role: "user", parts: [{ text: pertanyaan }] }];
 
@@ -104,7 +111,7 @@ export async function POST(req: Request) {
   } catch (e) {
     console.error("Gagal memanggil Gemini:", e);
     return NextResponse.json(
-      { galat: "Asisten sedang tidak bisa dihubungi. Coba lagi sebentar, atau buka Pustaka Hama untuk informasi yang sama." },
+      { galat: en ? "The assistant cannot be reached right now. Try again shortly, or open the Pest library for the same information." : "Asisten sedang tidak bisa dihubungi. Coba lagi sebentar, atau buka Pustaka Hama untuk informasi yang sama." },
       { status: 502 }
     );
   }

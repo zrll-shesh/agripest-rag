@@ -2,23 +2,108 @@
   "keterangan": "Jadwal simulasi kiriman foto dari kamera lampu perangkap. Tiap unit memotret setiap 30 menit. Ubah atau tambah baris di sini, lalu jalankan scripts/prediksi_sampel.py bila ada foto baru.",
   "tanggal": "2026-10-28",
   "unit": [
-    { "id": "padi", "nama": "Lahan Padi", "komoditas": "Padi", "lokasi": "Petak sawah A, 0,5 ha", "kodeKamera": "Kamera 01" },
-    { "id": "jagung", "nama": "Lahan Jagung", "komoditas": "Jagung", "lokasi": "Petak tegalan B, 0,4 ha", "kodeKamera": "Kamera 02" },
-    { "id": "bawang", "nama": "Lahan Bawang Merah", "komoditas": "Bawang", "lokasi": "Bedengan C, 0,25 ha", "kodeKamera": "Kamera 03" }
+    {
+      "id": "padi",
+      "nama": "Lahan Padi",
+      "komoditas": "Padi",
+      "lokasi": "Petak sawah A, 0,5 ha",
+      "kodeKamera": "Kamera 01",
+      "namaEn": "Rice field",
+      "lokasiEn": "Paddy plot A, 0.5 ha",
+      "kodeKameraEn": "Camera 01"
+    },
+    {
+      "id": "jagung",
+      "nama": "Lahan Jagung",
+      "komoditas": "Jagung",
+      "lokasi": "Petak tegalan B, 0,4 ha",
+      "kodeKamera": "Kamera 02",
+      "namaEn": "Corn field",
+      "lokasiEn": "Dryland plot B, 0.4 ha",
+      "kodeKameraEn": "Camera 02"
+    },
+    {
+      "id": "bawang",
+      "nama": "Lahan Bawang Merah",
+      "komoditas": "Bawang",
+      "lokasi": "Bedengan C, 0,25 ha",
+      "kodeKamera": "Kamera 03",
+      "namaEn": "Shallot field",
+      "lokasiEn": "Bed C, 0.25 ha",
+      "kodeKameraEn": "Camera 03"
+    }
   ],
   "kiriman": [
-    { "jam": "18.00", "unit": "bawang", "foto": "IP014000186.jpg" },
-    { "jam": "18.10", "unit": "jagung", "foto": "IP024000370.jpg" },
-    { "jam": "18.20", "unit": "padi", "foto": "IP005000342.jpg" },
-    { "jam": "18.30", "unit": "bawang", "foto": "IP015000051.jpg" },
-    { "jam": "18.40", "unit": "jagung", "foto": "luar-kutu-daun.jpg", "labelAsliTeks": "Kutu daun (foto luar dataset)" },
-    { "jam": "18.50", "unit": "padi", "foto": "IP003000587.jpg" },
-    { "jam": "19.00", "unit": "bawang", "foto": "IP014000480.jpg" },
-    { "jam": "19.10", "unit": "jagung", "foto": "IP019000131.jpg" },
-    { "jam": "19.30", "unit": "bawang", "foto": "IP016000504.jpg" },
-    { "jam": "19.40", "unit": "jagung", "foto": "IP024003932.jpg" },
-    { "jam": "20.00", "unit": "bawang", "foto": "IP014000645.jpg" },
-    { "jam": "20.10", "unit": "jagung", "foto": "luar-kolase-serangga.jpg", "labelAsliTeks": "Bukan hama sasaran (semut, kecoa, rayap)" },
-    { "jam": "20.30", "unit": "bawang", "foto": "luar-kutu-kayu.jpg", "labelAsliTeks": "Bukan hama sasaran (kutu kayu)" }
+    {
+      "jam": "18.00",
+      "unit": "bawang",
+      "foto": "IP014000186.jpg"
+    },
+    {
+      "jam": "18.10",
+      "unit": "jagung",
+      "foto": "IP024000370.jpg"
+    },
+    {
+      "jam": "18.20",
+      "unit": "padi",
+      "foto": "IP005000342.jpg"
+    },
+    {
+      "jam": "18.30",
+      "unit": "bawang",
+      "foto": "IP015000051.jpg"
+    },
+    {
+      "jam": "18.40",
+      "unit": "jagung",
+      "foto": "luar-kutu-daun.jpg",
+      "labelAsliTeks": "Kutu daun (foto luar dataset)",
+      "labelAsliTeksEn": "Aphid (photo outside the dataset)"
+    },
+    {
+      "jam": "18.50",
+      "unit": "padi",
+      "foto": "IP003000587.jpg"
+    },
+    {
+      "jam": "19.00",
+      "unit": "bawang",
+      "foto": "IP014000480.jpg"
+    },
+    {
+      "jam": "19.10",
+      "unit": "jagung",
+      "foto": "IP019000131.jpg"
+    },
+    {
+      "jam": "19.30",
+      "unit": "bawang",
+      "foto": "IP016000504.jpg"
+    },
+    {
+      "jam": "19.40",
+      "unit": "jagung",
+      "foto": "IP024003932.jpg"
+    },
+    {
+      "jam": "20.00",
+      "unit": "bawang",
+      "foto": "IP014000645.jpg"
+    },
+    {
+      "jam": "20.10",
+      "unit": "jagung",
+      "foto": "luar-kolase-serangga.jpg",
+      "labelAsliTeks": "Bukan hama sasaran (semut, kecoa, rayap)",
+      "labelAsliTeksEn": "Not a target pest (ants, cockroaches, termites)"
+    },
+    {
+      "jam": "20.30",
+      "unit": "bawang",
+      "foto": "luar-kutu-kayu.jpg",
+      "labelAsliTeks": "Bukan hama sasaran (kutu kayu)",
+      "labelAsliTeksEn": "Not a target pest (woodlouse)"
+    }
   ]
 }

@@ -16,6 +16,7 @@ const config: Config = {
         bata: { DEFAULT: "#A63A28", muda: "#F5E0DA" },
         air: { DEFAULT: "#2A6478", muda: "#DCEAEF" },
         malam: "#16302A",
+        lahan: { padi: "#2D6A47", jagung: "#C7951C", bawang: "#8A3F6E" },
       },
       fontFamily: {
         judul: ["'Bricolage Grotesque Variable'", "system-ui", "sans-serif"],

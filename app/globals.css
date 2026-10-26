@@ -36,3 +36,13 @@ h1, h2, h3 { font-family: "Bricolage Grotesque Variable", system-ui, sans-serif;
 
 .gulir-tipis::-webkit-scrollbar { height: 6px; width: 6px; }
 .gulir-tipis::-webkit-scrollbar-thumb { background: #c9d2c6; border-radius: 99px; }
+
+/* Latar hero malam: kisi halus seperti wadah perangkap + cahaya lampu */
+.latar-malam {
+  background-color: #16302a;
+  background-image:
+    radial-gradient(ellipse 60% 80% at 88% 0%, rgba(242, 193, 78, 0.22), transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: auto, 32px 32px, 32px 32px;
+}
