@@ -10,22 +10,31 @@ import { cx, persen } from "@/lib/format";
 
 interface Pesan { peran: "pengguna" | "asisten"; teks: string; sumber?: Sumber[]; mode?: "ai" | "pustaka"; galat?: boolean }
 
-// Menampilkan teks jawaban: daftar "- ", huruf tebal **x**, dan nomor rujukan [n].
+// Menampilkan teks jawaban: daftar "- ", **tebal**, *miring* (nama ilmiah), dan nomor rujukan [n].
+function miring(s: string, kunci: string) {
+  return s.split(/(\*[^*\n]+?\*)/g).map((b, i) =>
+    /^\*[^*\n]+\*$/.test(b) ? <em key={`${kunci}-${i}`}>{b.slice(1, -1)}</em> : <Fragment key={`${kunci}-${i}`}>{b.replace(/\*/g, "")}</Fragment>
+  );
+}
+function sebaris(s: string) {
+  return s.split(/(\*\*.+?\*\*|\[\d+\])/g).map((b, i) => {
+    if (/^\*\*.+\*\*$/.test(b)) return <strong key={i}>{miring(b.slice(2, -2), `b${i}`)}</strong>;
+    if (/^\[\d+\]$/.test(b)) return <sup key={i} className="ml-0.5 rounded bg-air-muda px-1 text-[10.5px] font-bold text-air">{b.slice(1, -1)}</sup>;
+    return <Fragment key={i}>{miring(b, `t${i}`)}</Fragment>;
+  });
+}
 function TeksJawaban({ teks }: { teks: string }) {
-  const sebaris = (s: string) =>
-    s.split(/(\*\*[^*]+\*\*|\[\d+\])/g).map((b, i) =>
-      b.startsWith("**") ? <strong key={i}>{b.slice(2, -2)}</strong>
-        : /^\[\d+\]$/.test(b) ? <sup key={i} className="ml-0.5 rounded bg-air-muda px-1 text-[10.5px] font-bold text-air">{b.slice(1, -1)}</sup>
-          : <Fragment key={i}>{b}</Fragment>
-    );
   const baris = teks.split("\n").filter((b) => b.trim());
   return (
     <div className="space-y-1.5">
-      {baris.map((b, i) =>
-        /^\s*[-*•]\s+/.test(b) ? (
-          <p key={i} className="flex gap-2"><span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-daun" />{<span>{sebaris(b.replace(/^\s*[-*•]\s+/, ""))}</span>}</p>
-        ) : <p key={i}>{sebaris(b)}</p>
-      )}
+      {baris.map((b, i) => {
+        const judul = /^\s*#{1,4}\s+/.test(b);
+        const bersih = b.replace(/^\s*#{1,4}\s+/, "");
+        if (/^\s*[-*•]\s+/.test(bersih)) {
+          return <p key={i} className="flex gap-2"><span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-daun" /><span>{sebaris(bersih.replace(/^\s*[-*•]\s+/, ""))}</span></p>;
+        }
+        return <p key={i} className={judul ? "pt-1 font-semibold" : undefined}>{sebaris(bersih)}</p>;
+      })}
     </div>
   );
 }
