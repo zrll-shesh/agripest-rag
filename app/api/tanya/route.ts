@@ -14,7 +14,7 @@ interface Permintaan {
   konteks?: { kelas: number | null; keyakinan?: number; lahan?: string; jam?: string; jumlah?: number; cocok?: "ya" | "tidak" | "ragu" | null };
 }
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 const ATURAN = `Anda adalah asisten Pengendalian Hama Terpadu (PHT) di aplikasi AgriPest-RAG untuk petani padi, jagung, dan bawang merah di Indonesia.
 

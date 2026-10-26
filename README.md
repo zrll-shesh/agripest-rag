@@ -30,7 +30,7 @@ npm run build    # cek build produksi
 1. Push folder ini ke GitHub, lalu impor repositori di Vercel (framework terdeteksi otomatis sebagai Next.js).
 2. Di Vercel: **Settings > Environment Variables**, tambahkan:
    - `GEMINI_API_KEY` = kunci API dari Google AI Studio (wajib agar asisten memakai AI)
-   - `GEMINI_MODEL` (opsional) = default `gemini-2.5-flash-lite`
+   - `GEMINI_MODEL` (opsional) = default `gemini-3.5-flash-lite` (gemini-2.5-flash-lite sudah tidak tersedia untuk pengguna baru)
 3. Deploy ulang setelah menambah variabel. Kunci API hanya dipakai di server, tidak pernah terkirim ke browser.
 
 ## Struktur data
