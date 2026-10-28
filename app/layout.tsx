@@ -25,8 +25,10 @@ export default function TataLetak({ children }: { children: React.ReactNode }) {
           <a href="#isi" className="absolute -left-[999px] top-2 z-50 rounded-kecil bg-kertas px-3 py-2 text-sm font-semibold focus:left-2">
             Lompat ke isi
           </a>
+          <div className="latar-padi kiri" aria-hidden />
+          <div className="latar-padi kanan" aria-hidden />
           <Navigasi />
-          <main id="isi" className="mx-auto w-full max-w-halaman px-4 pb-10 pt-5 sm:px-6 lg:pb-14 lg:pt-8">
+          <main id="isi" className="relative z-[1] mx-auto w-full max-w-halaman px-4 pb-10 pt-5 sm:px-6 lg:pb-14 lg:pt-8">
             {children}
           </main>
           <Kaki />

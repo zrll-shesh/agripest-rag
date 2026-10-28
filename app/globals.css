@@ -57,3 +57,9 @@ h1, h2, h3 { font-family: "Bricolage Grotesque Variable", system-ui, sans-serif;
 .kartu-klik { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
 .kartu-klik:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(23, 37, 29, 0.35); }
 @media (prefers-reduced-motion: reduce) { .kartu-klik:hover { transform: none; } }
+
+/* Rumpun padi tipis di pojok bawah layar, diam saat digulir */
+.latar-padi { position: fixed; bottom: -12px; width: clamp(150px, 20vw, 300px); aspect-ratio: 400 / 480; background: url("/padi.svg") no-repeat bottom / contain; opacity: 0.2; pointer-events: none; z-index: 0; }
+.latar-padi.kiri { left: -18px; }
+.latar-padi.kanan { right: -18px; transform: scaleX(-1); }
+@media (max-width: 640px) { .latar-padi { opacity: 0.12; width: 130px; } }
