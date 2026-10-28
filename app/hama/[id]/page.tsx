@@ -50,11 +50,11 @@ export default function HalamanDetailHama({ params }: { params: { id: string } }
       <Link href="/hama" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-lumpur hover:text-tinta">
         <ArrowLeft className="h-4 w-4" aria-hidden /> <T id="Semua hama" en="All pests" />
       </Link>
-      <header className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
+      <header className="latar-malam -mx-4 grid gap-5 px-5 py-8 text-kertas sm:mx-0 sm:rounded-[26px] sm:px-8 lg:grid-cols-[1fr_380px] lg:items-end">
         <div>
-          <p className="text-[14px] font-semibold text-lumpur"><T id={`Hama ${NAMA_KOMODITAS[kelas.komoditas].id.toLowerCase()}`} en={`${NAMA_KOMODITAS[kelas.komoditas].en} pest`} /></p>
+          <p className="text-[14px] font-semibold text-kertas/70"><T id={`Hama ${NAMA_KOMODITAS[kelas.komoditas].id.toLowerCase()}`} en={`${NAMA_KOMODITAS[kelas.komoditas].en} pest`} /></p>
           <h1 className="mt-1 text-[34px] font-bold leading-[1.05] sm:text-[48px]"><T id={kelas.nama} en={kelas.namaEn} /></h1>
-          <p className="mt-2 text-[16px] text-lumpur"><i>{kelas.namaIlmiah}</i></p>
+          <p className="mt-2 text-[16px] text-kertas/75"><i>{kelas.namaIlmiah}</i></p>
         </div>
         <CatatanKeandalan keandalan={kelas.keandalan} />
       </header>

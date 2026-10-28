@@ -7,6 +7,7 @@ import { NAMA_KOMODITAS, useBahasa } from "@/lib/i18n";
 import { PENGETAHUAN } from "@/lib/pengetahuan";
 import { cx } from "@/lib/format";
 
+const WARNA: Record<string, string> = { Padi: "#2D6A47", Jagung: "#C7951C", Bawang: "#8A3F6E" };
 const FILTER: ("Semua" | Komoditas)[] = ["Semua", "Padi", "Jagung", "Bawang"];
 
 export default function DaftarHama() {
@@ -34,7 +35,7 @@ export default function DaftarHama() {
           <span className="sr-only">{tx({ id: "Cari hama atau gejala", en: "Search pest or symptom" })}</span>
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-lumpur" aria-hidden />
           <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder={tx({ id: "Cari nama atau gejala, misal: daun putih", en: "Search name or symptom" })}
-            className="w-full rounded-full border border-garis bg-kertas py-2.5 pl-10 pr-4 text-[14.5px] outline-none focus:border-tinta" />
+            className="w-full rounded-full border border-garis bg-kertas py-3 pl-10 pr-4 text-[14.5px] shadow-[0_6px_20px_-14px_rgba(23,37,29,0.4)] outline-none focus:border-daun" />
         </label>
       </div>
 
@@ -44,12 +45,13 @@ export default function DaftarHama() {
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {hasil.map((k) => (
             <li key={k.id}>
-              <Link href={`/hama/${k.id}`} className="group flex h-full flex-col rounded-panel border border-garis bg-kertas p-4 transition-colors hover:border-tinta">
-                <span className="text-[12.5px] font-semibold text-lumpur">{tx(NAMA_KOMODITAS[k.komoditas])}</span>
+              <Link href={`/hama/${k.id}`} className="kartu-klik group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-garis bg-kertas p-5 hover:border-[color:var(--w)]" style={{ ["--w" as string]: WARNA[k.komoditas] }}>
+                <span className="absolute inset-x-0 top-0 h-1" style={{ background: WARNA[k.komoditas] }} aria-hidden />
+                <span className="flex items-center gap-2 text-[12.5px] font-semibold text-lumpur"><i className="h-2 w-2 rounded-full" style={{ background: WARNA[k.komoditas] }} aria-hidden />{tx(NAMA_KOMODITAS[k.komoditas])}</span>
                 <span className="mt-0.5 font-judul text-[19px] font-semibold leading-tight">{namaKelas(k, bahasa)}</span>
                 <i className="text-[13px] text-lumpur">{k.namaIlmiah}</i>
-                <span className="mt-2 line-clamp-4 text-[14px] leading-relaxed text-tinta/80">{tx(PENGETAHUAN[k.id].bahaya)}</span>
-                <span className={cx("mt-auto pt-3 text-[12.5px] font-semibold", k.keandalan === "tinggi" ? "text-daun" : k.keandalan === "sedang" ? "text-gabah" : "text-bata")}>
+                <span className="mb-3 mt-2 line-clamp-4 text-[14px] leading-relaxed text-tinta/80">{tx(PENGETAHUAN[k.id].bahaya)}</span>
+                <span className={cx("mt-auto self-start rounded-full px-2.5 py-1 text-[12px] font-semibold", k.keandalan === "tinggi" ? "bg-daun-muda text-daun-tua" : k.keandalan === "sedang" ? "bg-gabah-muda text-[#7a5206]" : "bg-bata-muda text-bata")}>
                   {tx(TEKS_KEANDALAN[k.keandalan].label)}
                 </span>
               </Link>

@@ -88,7 +88,7 @@ export default function ObrolanAsisten() {
   return (
     <div className="mx-auto flex max-w-[52rem] flex-col">
       {kelas && (
-        <div className="mb-4 flex items-start justify-between gap-3 rounded-panel border border-garis bg-kertas px-4 py-3">
+        <div className="mb-4 flex items-start justify-between gap-3 rounded-2xl border border-daun/25 bg-daun-muda/70 px-4 py-3">
           <div className="text-[14px] leading-relaxed">
             <p className="text-[12.5px] font-semibold text-lumpur">{tx({ id: "Asisten tahu Anda sedang melihat", en: "The assistant knows you are looking at" })}</p>
             <p>
@@ -107,14 +107,14 @@ export default function ObrolanAsisten() {
 
       <div className="space-y-4" aria-live="polite">
         {pesan.length === 0 && (
-          <div className="rounded-panel border border-dashed border-garis px-5 py-6">
+          <div className="rounded-[22px] border border-garis bg-kertas px-5 py-6 sm:px-6">
             <p className="text-[15.5px] leading-relaxed">
               {tx({ id: "Tanyakan apa saja tentang hama padi, jagung, dan bawang merah. Jawaban disusun dari pustaka sumber resmi (Kementan, BB Padi, Balitsa, IRRI, dan jurnal), dan selalu menyebut sumbernya.", en: "Ask anything about rice, corn, and shallot pests. Answers come from a library of official sources (Indonesian Ministry of Agriculture, BB Padi, Balitsa, IRRI, and journals) and always cite them." })}
             </p>
             <p className="mt-4 text-[13.5px] font-semibold text-lumpur">{tx({ id: "Coba tanyakan:", en: "Try asking:" })}</p>
-            <div className="mt-2 flex flex-col gap-2">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {saran.map((s) => (
-                <button key={s} type="button" onClick={() => kirim(s)} className="rounded-kecil border border-garis bg-kertas px-4 py-2.5 text-left text-[14.5px] hover:border-tinta">{s}</button>
+                <button key={s} type="button" onClick={() => kirim(s)} className="kartu-klik rounded-2xl border border-garis bg-tanah/60 px-4 py-3 text-left text-[14.5px] leading-snug hover:border-daun">{s}</button>
               ))}
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function ObrolanAsisten() {
           ) : (
             <div key={i} className="masuk flex gap-3">
               <span className="mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-daun text-kertas"><Sprout className="h-4 w-4" aria-hidden /></span>
-              <div className={cx("min-w-0 flex-1 rounded-[18px] rounded-tl-[6px] border px-4 py-3 text-[15px] leading-relaxed", p.galat ? "border-bata-muda bg-bata-muda/50" : "border-garis bg-kertas")}>
+              <div className={cx("min-w-0 flex-1 rounded-[18px] rounded-tl-[6px] border px-4 py-3 text-[15px] leading-relaxed", p.galat ? "border-bata-muda bg-bata-muda/50" : "border-garis bg-kertas shadow-[0_8px_24px_-18px_rgba(23,37,29,0.45)]")}>
                 {p.mode === "pustaka" && <p className="mb-2 rounded-kecil bg-gabah-muda px-3 py-2 text-[12.5px] text-[#6b4805]">{tx({ id: "Mode pustaka: kunci API Gemini belum diisi, jadi yang tampil adalah potongan pustaka paling relevan.", en: "Library mode: the Gemini API key is not set, so the most relevant library excerpts are shown." })}</p>}
                 <TeksJawaban teks={p.teks} />
                 {p.sumber && p.sumber.length > 0 && (
@@ -144,7 +144,7 @@ export default function ObrolanAsisten() {
         <div ref={akhir} />
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); kirim(masukan); }} className="sticky bottom-[72px] -mx-4 mt-6 bg-tanah px-4 pb-3 pt-3 sm:-mx-6 sm:px-6 lg:bottom-0 lg:pb-6">
+      <form onSubmit={(e) => { e.preventDefault(); kirim(masukan); }} className="sticky bottom-[72px] -mx-4 mt-6 bg-tanah/85 px-4 pb-3 pt-3 backdrop-blur sm:-mx-6 sm:px-6 lg:bottom-0 lg:pb-6">
         <div className="flex items-end gap-2 rounded-[22px] border border-garis bg-kertas p-2 shadow-[0_8px_30px_rgba(23,37,29,0.08)]">
           <label htmlFor="pertanyaan" className="sr-only">{tx({ id: "Tulis pertanyaan", en: "Write a question" })}</label>
           <textarea

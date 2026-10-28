@@ -5,21 +5,23 @@ import GarisWaktu from "@/components/GarisWaktu";
 import FotoDeteksi from "@/components/FotoDeteksi";
 import PanelKeputusan from "@/components/PanelKeputusan";
 import { GrafikAktivitas, JudulBagian, KunciBaca, LaporanMalam, RencanaBesok } from "@/components/Wawasan";
-import { SEMUA_KIRIMAN, kalimatRingkasan, ringkasUnit } from "@/lib/simulasi";
+import { SEMUA_KIRIMAN, kalimatRingkasan, keMenit, ringkasUnit } from "@/lib/simulasi";
 import { hitungStatistik, laporanMalam } from "@/lib/wawasan";
 import { JADWAL } from "@/lib/data";
 import { ambilKelas, namaKelas } from "@/lib/kelas";
 import { useBahasa } from "@/lib/i18n";
 
 const JEDA_MS = 4500;
-const MULAI_DARI = 4;
+// Dasbor dibuka langsung pada kondisi pukul 19.00 (lima uret di lahan bawang merah), dalam keadaan dijeda.
+const JAM_AWAL = "19.00";
+const MULAI_DARI = SEMUA_KIRIMAN.filter((k) => k.menit <= keMenit(JAM_AWAL)).length;
 
 export default function Dashboard() {
   const { bahasa, tx } = useBahasa();
   const en = bahasa === "en";
   const total = SEMUA_KIRIMAN.length;
   const [jumlahTampil, setJumlahTampil] = useState(MULAI_DARI);
-  const [berjalan, setBerjalan] = useState(true);
+  const [berjalan, setBerjalan] = useState(false);
   const [pilihanManual, setPilihanManual] = useState<number | null>(null);
 
   useEffect(() => {

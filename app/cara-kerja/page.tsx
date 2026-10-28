@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import KepalaHalaman from "@/components/KepalaHalaman";
 import { useBahasa, type Dwibahasa } from "@/lib/i18n";
 import { BARIS_HAMA, BARIS_PESTISIDA, semuaSumberUnik } from "@/lib/data";
 import { BATAS_PERLU_DICEK, BATAS_WASPADA } from "@/lib/simulasi";
@@ -22,12 +23,7 @@ export default function HalamanCaraKerja() {
   const jumlahSumber = semuaSumberUnik([...BARIS_HAMA, ...BARIS_PESTISIDA]).filter((s) => s.url).length;
   return (
     <div className="space-y-12">
-      <header className="max-w-[46rem]">
-        <h1 className="text-[32px] font-bold leading-[1.08] sm:text-[44px]">{tx({ id: "Dari foto perangkap sampai langkah di lahan", en: "From a trap photo to action in the field" })}</h1>
-        <p className="mt-3 text-[17px] leading-relaxed text-tinta/80">
-          {tx({ id: "AgriPest-RAG bukan sekadar pengenal hama. Sistem ini membantu memutuskan tindakan yang tepat, aman, dan sesuai aturan, supaya hasil panen dari lahan yang makin terbatas tetap terjaga.", en: "AgriPest-RAG is more than a pest recogniser. It helps decide on actions that are right, safe, and compliant, so harvests from ever-shrinking farmland stay protected." })}
-        </p>
-      </header>
+      <KepalaHalaman judul={tx({ id: "Dari foto perangkap sampai langkah di lahan", en: "From a trap photo to action in the field" })} keterangan={tx({ id: "AgriPest-RAG bukan sekadar pengenal hama. Sistem ini membantu memutuskan tindakan yang tepat, aman, dan sesuai aturan, supaya hasil panen dari lahan yang makin terbatas tetap terjaga.", en: "AgriPest-RAG is more than a pest recogniser. It helps decide on actions that are right, safe, and compliant, so harvests from ever-shrinking farmland stay protected." })} />
 
       <section aria-labelledby="alur">
         <h2 id="alur" className="mb-5 text-[24px] font-semibold">{tx({ id: "Alurnya", en: "The flow" })}</h2>
